@@ -1,0 +1,8 @@
+#!/bin/bash
+
+STATUS="$(kubectl get deployment --namespace kube-system tiller-deploy | tail -n +2 | awk '{print $5}')"
+while [ $STATUS -ne "1" ]; do
+	echo "Tiller ready: $STATUS"
+	sleep 2
+	STATUS="$(kubectl get deployment --namespace kube-system tiller-deploy | tail -n +2 | awk '{print $5}')"
+done
